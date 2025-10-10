@@ -1,7 +1,7 @@
 int pin;
 
 int start_delay = 0; // delay before firing first igniter
-int fire_delay = 30; // time between between each pyro
+int fire_delay = 30; // time between firing each pyro
 int ignite_time = 5; // how long to power the fuse for
 bool repeat = false; // change to true to loop indefinitly
 
