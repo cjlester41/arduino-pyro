@@ -1,46 +1,30 @@
 #include <SoftwareSerial.h>
 
-SoftwareSerial RadioSerial(10, 11); 
-
 int pin;
-bool trigger = false; 
+int fire_delay = 30; 
+SoftwareSerial HC12(10, 11); 
 
-const int start_delay = 0; 
-const int fire_delay = 30; 
-const int ignite_time = 5; 
-
-void setup() {
-  RadioSerial.begin(2400); 
-  
+void setup() {  
   for (pin = 4; pin < 8; pin++) {
     pinMode(pin, OUTPUT);  
     digitalWrite(pin, LOW);
   }
+  HC12.begin(9600); 
 }
 
 void loop() {  
-  if (!trigger) {
-    if (RadioSerial.available() > 0) {
-      String command = RadioSerial.readStringUntil('\n');
-      command.trim();
-      
-      if (command == "LETS_FUCKING_GO") {
-        trigger = true;
-        delay(start_delay * 1000); 
+  if (HC12.available() > 0) {
+    String received = HC12.readStringUntil('\n');
+    received.trim();
+    
+    if (received == "LETS_FUCKING_GO") {
+      for (pin = 4; pin < 8; pin++) {
+        digitalWrite(pin, HIGH);
+        delay(4 * 1000);
+        digitalWrite(pin, LOW);
+        delay((fire_delay - 4) * 1000);          
       }
+      exit(0)
     }
-  }
-  
-  if (trigger) {
-    for (pin = 4; pin < 8; pin++) {
-      digitalWrite(pin, HIGH);
-      delay(ignite_time * 1000);
-      digitalWrite(pin, LOW);
-      
-      if (pin < 7) {
-        delay((fire_delay - ignite_time) * 1000);    
-      }
-    }
-    exit(0)
   }
 }
