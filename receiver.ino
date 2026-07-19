@@ -3,15 +3,14 @@
 SoftwareSerial RadioSerial(10, 11); 
 
 int pin;
+bool trigger = false; 
 
-int start_delay = 0;   // delay before firing first igniter
-int fire_delay = 30;   // time between firing each pyro (seconds)
-int ignite_time = 5;   // how long to power the fuse for (seconds)
-bool signal = false; 
+const int start_delay = 0; 
+const int fire_delay = 30; 
+const int ignite_time = 5; 
 
 void setup() {
-  Serial.begin(9600);
-  RadioSerial.begin(9600); 
+  RadioSerial.begin(2400); 
   
   for (pin = 4; pin < 8; pin++) {
     pinMode(pin, OUTPUT);  
@@ -20,19 +19,19 @@ void setup() {
 }
 
 void loop() {  
-  if (!signal) {
+  if (!trigger) {
     if (RadioSerial.available() > 0) {
       String command = RadioSerial.readStringUntil('\n');
       command.trim();
       
       if (command == "LETS_FUCKING_GO") {
-        signal = true;
+        trigger = true;
         delay(start_delay * 1000); 
       }
     }
   }
   
-  if (signal) {
+  if (trigger) {
     for (pin = 4; pin < 8; pin++) {
       digitalWrite(pin, HIGH);
       delay(ignite_time * 1000);
@@ -42,5 +41,6 @@ void loop() {
         delay((fire_delay - ignite_time) * 1000);    
       }
     }
+    exit(0)
   }
 }
