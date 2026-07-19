@@ -39,7 +39,7 @@ void loop() {
         delay((fire_delay - ignite_time) * 1000);    
       }
     }
-    delay(500); 
+    exit(0)
   }
   last_state = button_state;
 }
