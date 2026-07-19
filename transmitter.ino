@@ -15,9 +15,9 @@ void setup() {
 
 void loop() {    
   if (digitalRead(2) == LOW) {    
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 4; i++) {
       HC12.print("LETS_FUCKING_GO\n");
-      delay(30); 
+      delay(40); 
     }
     
     for (pin = 4; pin < 8; pin++) {
@@ -26,6 +26,6 @@ void loop() {
       digitalWrite(pin, LOW);
       delay((fire_delay - 4) * 1000);    
     }
-    exit(0)
+    exit(0);
   }
 }
