@@ -24,7 +24,7 @@ void loop() {
         digitalWrite(pin, LOW);
         delay((fire_delay - 4) * 1000);          
       }
-      exit(0)
+      exit(0);
     }
   }
 }
