@@ -6,8 +6,8 @@ SoftwareSerial HC12(10, 11);
  
 void setup() { 
   for (pin = 4; pin < 8; pin++) {
-    pinMode(pin, OUTPUT);  
     digitalWrite(pin, LOW); 
+    pinMode(pin, OUTPUT);      
   }
   HC12.begin(9600); 
   pinMode(2, INPUT_PULLUP); 
