@@ -3,7 +3,7 @@
 int pin;
 int fire_delay = 30; 
 bool triggered = false;
-SoftwareSerial HC12(10, 11); 
+SoftwareSerial HC12(11, -1);
 
 void setup() {  
   for (pin = 4; pin < 8; pin++) {
