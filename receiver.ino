@@ -3,7 +3,7 @@
 int pin;
 int fire_delay = 30; 
 bool triggered = false;
-SoftwareSerial HC12(11, -1);
+SoftwareSerial HC12(11, 3);
 
 void setup() {  
   for (pin = 4; pin < 8; pin++) {
@@ -17,7 +17,7 @@ void loop() {
   if (!triggered && HC12.available() > 0) {
     String received = HC12.readStringUntil('\n');
     received.trim();    
-    if (received == "LETS_FUCKING_GO") {
+    if (received == "PARTY_TIME") {
       triggered = true;
       for (pin = 4; pin < 8; pin++) {
         digitalWrite(pin, HIGH);

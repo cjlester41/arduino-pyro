@@ -3,7 +3,7 @@
 int pin;
 int fire_delay = 30;
 bool triggered = false;
-SoftwareSerial HC12(-1, 11); 
+SoftwareSerial HC12(3, 11);
 
 void setup() { 
   for (pin = 4; pin < 8; pin++) {
@@ -11,17 +11,17 @@ void setup() {
     pinMode(pin, OUTPUT);     
   }
   HC12.begin(9600); 
-  pinMode(13, INPUT_PULLUP); 
-  while (digitalRead(13) == LOW);
+  pinMode(12, INPUT_PULLUP); 
+  while (digitalRead(12) == LOW);
 }
 
 void loop() {    
-  if (!triggered && digitalRead(13) == LOW) {    
+  if (!triggered && digitalRead(12) == LOW) {    
     delay(50);
-    if (digitalRead(13) == LOW) {
+    if (digitalRead(12) == LOW) {
       triggered = true;
       for (int i = 0; i < 4; i++) {
-        HC12.print("LETS_FUCKING_GO\n");
+        HC12.print("PARTY_TIME\n");
         delay(50); 
       }      
       for (pin = 4; pin < 8; pin++) {
