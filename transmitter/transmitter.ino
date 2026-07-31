@@ -20,16 +20,24 @@ void loop() {
     delay(50);
     if (digitalRead(12) == LOW) {
       triggered = true;
-      for (int i = 0; i < 4; i++) {
-        HC12.print("PARTY_TIME\n");
-        delay(50); 
-      }      
+      transmit(4, 200);
       for (pin = 4; pin < 8; pin++) {
         digitalWrite(pin, HIGH);
         delay(4 * 1000);
         digitalWrite(pin, LOW);
-        delay((fire_delay - 4) * 1000);    
+        if (pin == 4) {
+          transmit((fire_delay - 4) * 2, 500);
+        } else {
+          delay((fire_delay - 4) * 1000);    
+        }
       }
     }
   }
+}
+
+void transmit(int bursts, int spacing) {
+  for (int i = 0; i < bursts; i++) {
+    HC12.print("PARTY_TIME\n");
+    delay(spacing); 
+  }    
 }
